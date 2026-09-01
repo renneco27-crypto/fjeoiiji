@@ -405,17 +405,21 @@ html, body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 16px 24px;
-  gap: 8px;
+  padding: 12px 20px;
+  gap: 6px;
   min-width: 0;
+  height: 100vh;
+  overflow: hidden;
 }
 
 .player-bar {
-  width: min(72vh, 560px);
+  width: min(calc(100vh - 160px), calc(100vw - 580px), 580px);
+  min-width: 320px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 4px 0;
+  padding: 2px 0;
+  flex-shrink: 0;
 }
 
 .player-info-left {
@@ -507,15 +511,19 @@ html, body {
 /* ── Board & Eval Bar Container ── */
 .board-container {
   display: flex;
-  align-items: stretch;
-  gap: 10px;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  flex-shrink: 0;
 }
 
 .eval-bar-wrapper {
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 24px;
+  width: 22px;
+  height: min(calc(100vh - 160px), calc(100vw - 580px), 580px);
+  min-height: 320px;
   flex-shrink: 0;
 }
 
@@ -529,7 +537,7 @@ html, body {
 
 .eval-bar-track {
   flex: 1;
-  width: 18px;
+  width: 16px;
   background: #262421;
   border-radius: 3px;
   overflow: hidden;
@@ -548,19 +556,29 @@ html, body {
 
 .board-frame {
   position: relative;
-  width: min(72vh, 560px);
-  height: min(72vh, 560px);
+  width: min(calc(100vh - 160px), calc(100vw - 580px), 580px);
+  height: min(calc(100vh - 160px), calc(100vw - 580px), 580px);
+  min-width: 320px;
+  min-height: 320px;
+  aspect-ratio: 1 / 1;
   border-radius: 4px;
   overflow: hidden;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
+  flex-shrink: 0;
 }
 
-.board-wrap {
+.board-wrap, #board {
+  position: relative;
   width: 100%;
   height: 100%;
+  display: block;
 }
 
-.board-wrap .cg-wrap {
+.board-wrap .cg-wrap,
+.cg-wrap {
+  box-sizing: border-box;
+  position: relative;
+  display: block;
   width: 100% !important;
   height: 100% !important;
 }
@@ -594,13 +612,16 @@ html, body {
 
 /* Quick toolbar below board */
 .quick-game-tools {
+  width: min(calc(100vh - 160px), calc(100vw - 580px), 580px);
+  min-width: 320px;
   display: flex;
   align-items: center;
   gap: 8px;
-  margin-top: 4px;
-  width: min(72vh, 560px);
+  margin-top: 2px;
   justify-content: space-between;
+  flex-shrink: 0;
 }
+
 
 .tool-btn {
   background: rgba(255, 255, 255, 0.08);

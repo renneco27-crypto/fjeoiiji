@@ -10,10 +10,13 @@ var REVIEW_DEPTH_DEEP = 14;
 var POOL_SIZE = 1;
 var MISTRAL_API_KEY = '';
 
-// Fetch config from server
-fetch('/api/config').then(function(r) { return r.json(); }).then(function(cfg) {
-  MISTRAL_API_KEY = cfg.MISTRAL_API_KEY || '';
-}).catch(function() { /* no-op, static fallback used */ });
+// Fetch config from server (only over http/https to avoid file:// CORS errors)
+if (location.protocol === 'http:' || location.protocol === 'https:') {
+  fetch('/api/config').then(function(r) { return r.json(); }).then(function(cfg) {
+    MISTRAL_API_KEY = cfg.MISTRAL_API_KEY || '';
+  }).catch(function() { /* no-op, static fallback used */ });
+}
+
 
 // ═══════════════════════════════════════════════════════
 // CLASSIFICATION DATA & SOUNDS (Chess.com Theme)
@@ -159,14 +162,17 @@ function saveApiToken(t) {
 function getApiToken() {
   return loadApiToken() || document.getElementById('apiToken').value.trim();
 }
-// Load token from .env at startup
-fetch('.env').then(function(r) { return r.text(); }).then(function(text) {
-  var m = text.match(/^LICHESS_API_TOKEN=(.+)$/m);
-  if (m) {
-    document.getElementById('apiToken').value = m[1];
-    saveApiToken(m[1]);
-  }
-}).catch(function() {});
+// Load token from .env at startup (only over http/https to avoid file:// CORS errors)
+if (location.protocol === 'http:' || location.protocol === 'https:') {
+  fetch('.env').then(function(r) { return r.text(); }).then(function(text) {
+    var m = text.match(/^LICHESS_API_TOKEN=(.+)$/m);
+    if (m) {
+      document.getElementById('apiToken').value = m[1];
+      saveApiToken(m[1]);
+    }
+  }).catch(function() {});
+}
+
 function explorerFetchOpts() {
   var token = getApiToken();
   if (!token) return {};
@@ -1306,6 +1312,8 @@ function suggestBestMove() {
 // ═══════════════════════════════════════════════════════
 var analysisPool = null;
 var engineReady = false;
+var recentWorkerMsgs = [];
+
 
 function setEngineStatus(s) {
   var dot = document.getElementById('engineDot'), lbl = document.getElementById('engineLabel');
@@ -1628,14 +1636,22 @@ function showPromotionPicker(from, to, color, callback) {
 
 function initBoard() {
   var el = document.getElementById('board');
+  if (!el) return;
   cg = ChessgroundLib.Chessground(el, {
+    fen: game ? game.fen() : 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1',
+    orientation: 'white',
+    coordinates: true,
     movable: { color: 'both', free: false, dests: getLegalDests() },
     events: { move: onMove },
     animation: { enabled: true, duration: 150 },
     highlight: { lastMove: true, check: true },
     draggable: { showGhost: true }
   });
+  window.addEventListener('resize', function() {
+    if (cg && cg.redrawAll) cg.redrawAll();
+  });
 }
+
 
 function updateBoard() {
   var movableColor = 'both';
