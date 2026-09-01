@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chess Coach</title>
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="icon" type="image/x-icon" href="favicon.ico">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+  <h1>Chess Coach <span>Coach · Stockfish · NNUE</span></h1>
+  <div class="rating-select-wrap">
+    <label for="ratingSelect">Rating</label>
+    <select id="ratingSelect">
+      <option value="1000">&lt;1200</option>
+      <option value="1200">1200–1399</option>
+      <option value="1400" selected>1400–1599</option>
+      <option value="1600">1600–1799</option>
+      <option value="1800">1800–1999</option>
+      <option value="2000">2000–2199</option>
+      <option value="2200">2200–2499</option>
+      <option value="2500">2500+</option>
+    </select>
+  </div>
+  <div class="token-wrap">
+    <input type="text" id="apiToken" placeholder="Lichess API token (get at lichess.org/account/oauth/token)" spellcheck="false">
+    <button class="btn small" id="tokenSaveBtn">Save</button>
+  </div>
+</header>
+
+<div class="main-wrap">
+  <!-- Board column -->
+  <div class="board-col">
+    <div class="board-area">
+      <div class="eval-vert">
+        <span class="eval-val" id="evalDisplay">0.00</span>
+        <div class="eval-bar-wrap-v"><div class="eval-bar-v" id="evalBar"></div></div>
+      </div>
+      <div class="board-wrap" id="board"></div>
+    </div>
+    <div class="nav-landmark-col" id="landmarkNavRow" style="display:none">
+      <button class="btn" id="prevLandmarkBtn">&#9664; Back</button>
+      <button class="btn" id="nextLandmarkBtn">Next &#9654;</button>
+    </div>
+
+    <!-- FEN row -->
+    <div class="fen-row">
+      <input class="fen-input" id="fenInput" placeholder="Paste FEN to load a position…" spellcheck="false">
+      <button class="btn primary" id="positionBtn">&#9776; Position</button>
+    </div>
+
+    <!-- PGN row -->
+    <div class="pgn-row">
+      <textarea id="pgnInput" placeholder="Paste PGN here to review a complete game…" spellcheck="false" rows="4"></textarea>
+      <div class="pgn-actions">
+        <button class="btn accent" id="reviewBtn">&#9654; Review Game</button>
+        <button class="btn danger" id="clearBtn">Clear</button>
+      </div>
+    </div>
+
+    <!-- Controls -->
+    <div class="move-controls">
+      <div class="depth-row">
+        <span>Depth</span>
+        <input type="range" id="depthSlider" min="6" max="18" value="10"
+               oninput="document.getElementById('depthVal').textContent=this.value">
+        <span id="depthVal">10</span>
+      </div>
+      <button class="btn" id="flipBtn" title="Flip board">&#8635; Flip</button>
+      <button class="btn" id="suggestBtn" title="Show best move in current position">&#9650; Best Move</button>
+      <button class="btn" id="coachPlayBtn" title="Play a game against Maia AI">&#9822; Play vs Coach</button>
+      <button class="btn" id="ttsToggle" title="Toggle coach voice (browser built-in, no setup needed)">&#128263; Voice: OFF</button>
+      <div class="maia-delay-row" id="maiaDelayRow" style="display:none">
+        <span>Maia delay</span>
+        <input type="range" id="maiaDelaySlider" min="0" max="2000" value="1800" step="50"
+               oninput="document.getElementById('maiaDelayVal').textContent=this.value+'ms'">
+        <span id="maiaDelayVal">1800ms</span>
+      </div>
+    </div>
+
+    <!-- Navigation bar -->
+    <div class="nav-bar" id="navBar" style="display:none">
+      <div class="nav-row">
+        <button class="btn" id="prevMoveBtn">&#8592;</button>
+        <span id="navMoveInfo"></span>
+        <button class="btn" id="nextMoveBtn">&#8594;</button>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Right column -->
+  <div class="right-col">
+    <!-- Engine Status -->
+    <div class="engine-status-big">
+      <div class="engine-dot big-dot" id="engineDot"></div>
+      <span id="engineLabel">Loading engine…</span>
+    </div>
+    <!-- Coach -->
+    <div class="coach-widget">
+      <div class="coach-avatar-wrap">
+        <div class="coach-bot" id="coachBot" data-mood="good">
+          <div class="bot-glow"></div>
+          <svg class="bot-svg" viewBox="0 0 200 200">
+            <ellipse cx="100" cy="182" rx="48" ry="7" fill="rgba(0,0,0,.5)"/>
+            <g class="bot-body">
+              <rect x="64" y="150" width="72" height="18" rx="4" class="bot-part bot-base"/>
+              <path d="M72,150 L74,112 Q100,100 126,112 L128,150 Z" class="bot-part bot-torso"/>
+              <g class="bot-head">
+                <rect x="68" y="54" width="64" height="56" rx="13" class="bot-part bot-headshape"/>
+                <rect x="66" y="42" width="12" height="16" rx="3" class="bot-part bot-crenel"/>
+                <rect x="94" y="38" width="12" height="20" rx="3" class="bot-part bot-crenel"/>
+                <rect x="122" y="42" width="12" height="16" rx="3" class="bot-part bot-crenel"/>
+                <rect x="78" y="68" width="44" height="32" rx="9" class="bot-face"/>
+                <ellipse cx="92" cy="84" rx="5" ry="6" class="bot-eye"/>
+                <ellipse cx="108" cy="84" rx="5" ry="6" class="bot-eye" id="eyeR"/>
+                <path id="botBrowL" d="M83,70 Q90,67 97,70" class="bot-brow"/>
+                <path id="botBrowR" d="M103,70 Q110,67 117,70" class="bot-brow"/>
+                <path id="botMouth" d="M90,90 Q100,94 110,90" class="bot-mouth"/>
+              </g>
+              <path d="M72,122 Q56,130 52,148" class="bot-part bot-arm bot-arm-l"/>
+              <path d="M128,122 Q144,130 148,148" class="bot-part bot-arm bot-arm-r"/>
+              <g class="status-badge">
+                <circle cx="148" cy="66" r="14" class="badge-circle"/>
+                <text x="148" y="72" class="badge-icon" id="badgeIcon" text-anchor="middle">&#10003;</text>
+              </g>
+            </g>
+          </svg>
+          <div class="fx-layer" id="fxLayer"></div>
+        </div>
+      </div>
+      <div class="dialogue-box" id="dialogueBox">
+        <div class="dialogue-header">
+          <span class="dialogue-label" id="dialogueLabel">Ready</span>
+          <span class="dialogue-icon" id="dialogueIconEl">&#10003;</span>
+        </div>
+        <p class="dialogue-text" id="dialogueText">Ready when you are. Make a move or paste a PGN to review a game.</p>
+        <div class="why-row">
+          <button class="btn-why" id="whyMistakeBtn" style="display:none" onclick="showRefutation()">&#9888; Why this is a mistake</button>
+          <button class="btn-stop-replay" id="refStopBtn" style="display:none" onclick="stopRefutationReplay()">&#9646;&#9646; Stop replay</button>
+        </div>
+        <div id="refutationDisplay" class="refutation-box"></div>
+      </div>
+    </div>
+
+    <!-- Eval graph -->
+    <div class="graph-panel">
+      <div class="panel-title">Evaluation Graph</div>
+      <div class="graph-wrap">
+        <canvas id="evalCanvas"></canvas>
+        <div id="graphTooltip"></div>
+      </div>
+    </div>
+
+    <!-- Chess.com sync -->
+    <div class="chess-sync-panel">
+      <div class="panel-title">Chess.com Sync</div>
+      <div class="sync-row">
+        <input class="sync-input" id="chessUserInput" placeholder="Username" spellcheck="false">
+        <button class="btn" id="syncBtn">&#8635; Sync</button>
+      </div>
+      <div class="sync-status" id="syncStatus"></div>
+      <div class="sync-game-list" id="syncGameList"></div>
+    </div>
+
+    <!-- Move history -->
+    <div class="history-panel">
+      <div class="history-header">
+        <span class="panel-title" style="margin:0">Move History</span>
+        <span class="history-actions">
+          <button class="btn-undo" id="undoDeleteBtn" style="display:none" title="Undo branch deletion">&#10003;</button>
+          <span id="accuracyDisplay" style="font-size:11px;color:var(--text-dim)"></span>
+        </span>
+      </div>
+      <div class="move-list" id="moveList"></div>
+      <!-- Opening Explorer -->
+      <div class="explorer-panel" style="border:none;border-radius:0;box-shadow:none;padding:10px 0 0;margin-top:6px;border-top:1px solid var(--border)">
+        <div class="panel-title">
+          <span>Opening Explorer</span>
+          <button class="btn-explorer-toggle" id="explorerToggleBtn" style="display:none" title="Show/hide explorer during Maia game">&#9776;</button>
+        </div>
+        <div id="explorerContent">
+          <div class="explorer-empty">Make a move to see opening statistics</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/onnxruntime-web@1.27.0/dist/ort.min.js"></script>
+<script src="chess.js"></script>
+<script src="chessground.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
