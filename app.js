@@ -16,14 +16,40 @@ fetch('/api/config').then(function(r) { return r.json(); }).then(function(cfg) {
 }).catch(function() { /* no-op, static fallback used */ });
 
 // ═══════════════════════════════════════════════════════
-// CLASSIFICATION DATA
+// CLASSIFICATION DATA & SOUNDS (Chess.com Theme)
 // ═══════════════════════════════════════════════════════
 var MOOD_COLORS = {
-  blunder:'#e0483e', mistake:'#e29233', inaccuracy:'#4c8fe0',
-  good:'#d4cfc9', excellent:'#4caf6e', best:'#3fbf6a',
-  great:'#3f7ce0', brilliant:'#2fd3c9', forced:'#8a8a8a', book:'#8a8a8a'
+  blunder: '#FA412D',
+  mistake: '#FFA459',
+  inaccuracy: '#F7C631',
+  good: '#95B776',
+  excellent: '#81B64C',
+  best: '#81B64C',
+  great: '#749BBF',
+  brilliant: '#26C2A3',
+  forced: '#81B64C',
+  book: '#D5A47D'
 };
+var CHESS_SOUNDS = {
+  move: new Audio('https://images.chesscomfiles.com/chess-themes/sounds/_MP3_/default/move-self.mp3'),
+  capture: new Audio('https://images.chesscomfiles.com/chess-themes/sounds/_MP3_/default/capture.mp3'),
+  check: new Audio('https://images.chesscomfiles.com/chess-themes/sounds/_MP3_/default/move-check.mp3'),
+  castle: new Audio('https://images.chesscomfiles.com/chess-themes/sounds/_MP3_/default/castle.mp3'),
+  promote: new Audio('https://images.chesscomfiles.com/chess-themes/sounds/_MP3_/default/promote.mp3'),
+  gameStart: new Audio('https://images.chesscomfiles.com/chess-themes/sounds/_MP3_/default/game-start.mp3'),
+  gameEnd: new Audio('https://images.chesscomfiles.com/chess-themes/sounds/_MP3_/default/game-end.mp3')
+};
+function playChessSound(type) {
+  try {
+    var snd = CHESS_SOUNDS[type];
+    if (snd) {
+      snd.currentTime = 0;
+      snd.play().catch(function() {});
+    }
+  } catch(e) {}
+}
 var CLASS_META = {
+
   blunder:{label:'Blunder',icon:'!!'},
   mistake:{label:'Mistake',icon:'?'},
   inaccuracy:{label:'Inaccuracy',icon:'?!'},
@@ -1671,6 +1697,18 @@ function onMoveWithPromotion(from, to, promotion) {
   }
   var san = result.san, fenAfter = game.fen();
   isAnalysing = true;
+
+  if (result.san.indexOf('+') !== -1 || result.san.indexOf('#') !== -1) {
+    playChessSound('check');
+  } else if (result.flags.indexOf('c') !== -1 || result.flags.indexOf('e') !== -1) {
+    playChessSound('capture');
+  } else if (result.flags.indexOf('k') !== -1 || result.flags.indexOf('q') !== -1) {
+    playChessSound('castle');
+  } else if (result.flags.indexOf('p') !== -1) {
+    playChessSound('promote');
+  } else {
+    playChessSound('move');
+  }
 
   updateBoard();
   cg.set({ lastMove: [from, to], check: game.in_check() ? game.turn() : false });
