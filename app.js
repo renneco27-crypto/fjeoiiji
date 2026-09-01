@@ -1013,7 +1013,7 @@ document.addEventListener('pointermove', function(evt) {
     hideSfPreview();
   }
 });
-document.getElementById('evalCanvas').addEventListener('pointermove', function(evt) {
+var el_evalCanvas = document.getElementById('evalCanvas'); if (el_evalCanvas) el_evalCanvas.addEventListener('pointermove', function(evt) {
   if (!graphMoves.length) return;
   var rect = this.getBoundingClientRect(), x = evt.clientX - rect.left;
   var idx = Math.max(0, Math.min(graphMoves.length - 1, Math.round((x / rect.width) * (graphMoves.length - 1))));
@@ -1043,7 +1043,7 @@ document.getElementById('evalCanvas').addEventListener('pointermove', function(e
     }
   }
 });
-document.getElementById('evalCanvas').addEventListener('pointerleave', function() {
+var el_evalCanvas = document.getElementById('evalCanvas'); if (el_evalCanvas) el_evalCanvas.addEventListener('pointerleave', function() {
   graphHoverIdx = -1;
   drawGraph();
   document.getElementById('graphTooltip').style.display = 'none';
@@ -1060,7 +1060,7 @@ document.getElementById('evalCanvas').addEventListener('pointerleave', function(
     }
   }
 });
-document.getElementById('evalCanvas').addEventListener('click', function(evt) {
+var el_evalCanvas = document.getElementById('evalCanvas'); if (el_evalCanvas) el_evalCanvas.addEventListener('click', function(evt) {
   if (!graphMoves.length) return;
   _lastMouseX = evt.clientX; _lastMouseY = evt.clientY;
   var rect = this.getBoundingClientRect(), x = evt.clientX - rect.left;
@@ -1215,11 +1215,11 @@ function showBranchPopover(anchorEl, parentIdx) {
   pop.style.left = Math.max(4, rect.left - pop.offsetWidth + 20) + 'px';
   pop.style.top = (rect.bottom + 2) + 'px';
 
-  document.getElementById('branchPopGo').addEventListener('click', function() {
+  var el_branchPopGo = document.getElementById('branchPopGo'); if (el_branchPopGo) el_branchPopGo.addEventListener('click', function() {
     pop.remove();
     if (!isAnalysing) goToMove(parentIdx);
   });
-  document.getElementById('branchPopDel').addEventListener('click', function() {
+  var el_branchPopDel = document.getElementById('branchPopDel'); if (el_branchPopDel) el_branchPopDel.addEventListener('click', function() {
     pop.remove();
     if (!isAnalysing) deleteBranchesAt(parentIdx);
   });
@@ -3430,7 +3430,7 @@ function recordPosition(fen) {
     gameHistory.push(fen);
   }
 }
-document.getElementById('positionBtn').addEventListener('click', function() {
+var el_positionBtn = document.getElementById('positionBtn'); if (el_positionBtn) el_positionBtn.addEventListener('click', function() {
   if (maiaMode) stopMaiaMode();
   cancelReview();
   clearMistakeUI();
@@ -3485,7 +3485,7 @@ document.getElementById('positionBtn').addEventListener('click', function() {
   });
 });
 
-document.getElementById('reviewBtn').addEventListener('click', function() {
+var el_reviewBtn = document.getElementById('reviewBtn'); if (el_reviewBtn) el_reviewBtn.addEventListener('click', function() {
   if (maiaMode) stopMaiaMode();
   if (isAnalysing) { coachReset('Already analysing. Please wait.'); return; }
   if (!engineReady) { coachReset('Engine still loading. Please wait.'); return; }
@@ -3511,7 +3511,7 @@ document.getElementById('reviewBtn').addEventListener('click', function() {
   runGameReview();
 });
 
-document.getElementById('clearBtn').addEventListener('click', function() {
+var el_clearBtn = document.getElementById('clearBtn'); if (el_clearBtn) el_clearBtn.addEventListener('click', function() {
   if (maiaMode) stopMaiaMode();
   cancelReview();
   clearMistakeUI();
@@ -3531,14 +3531,14 @@ document.getElementById('clearBtn').addEventListener('click', function() {
   updateNavDisplay();
 });
 
-document.getElementById('prevMoveBtn').addEventListener('click', function() {
+var el_prevMoveBtn = document.getElementById('prevMoveBtn'); if (el_prevMoveBtn) el_prevMoveBtn.addEventListener('click', function() {
   if (navIdx > -1) { goToMove(navIdx - 1); }
 });
 
-document.getElementById('nextMoveBtn').addEventListener('click', function() {
+var el_nextMoveBtn = document.getElementById('nextMoveBtn'); if (el_nextMoveBtn) el_nextMoveBtn.addEventListener('click', function() {
   if (navIdx < moveHistory.length - 1) { goToMove(navIdx + 1); }
 });
-document.getElementById('nextLandmarkBtn').addEventListener('click', function() {
+var el_nextLandmarkBtn = document.getElementById('nextLandmarkBtn'); if (el_nextLandmarkBtn) el_nextLandmarkBtn.addEventListener('click', function() {
   if (!reviewData) return;
   if (playbackTimer) clearTimeout(playbackTimer);
   playbackTimer = null;
@@ -3552,7 +3552,7 @@ document.getElementById('nextLandmarkBtn').addEventListener('click', function() 
     advanceToLandmark(nextIdx);
   }
 });
-document.getElementById('prevLandmarkBtn').addEventListener('click', function() {
+var el_prevLandmarkBtn = document.getElementById('prevLandmarkBtn'); if (el_prevLandmarkBtn) el_prevLandmarkBtn.addEventListener('click', function() {
   console.log('prevLandmarkBtn clicked', { reviewData: !!reviewData, playbackTimer: !!playbackTimer, currentPly: game.history().length, landmarks: reviewData ? reviewData.landmarks.length : null });
   if (!reviewData) return;
   if (playbackTimer) clearTimeout(playbackTimer);
@@ -3604,12 +3604,12 @@ document.addEventListener('keydown', function(e) {
 });
 
 // ── Undo Delete Branch ──
-document.getElementById('undoDeleteBtn').addEventListener('click', function() {
+var el_undoDeleteBtn = document.getElementById('undoDeleteBtn'); if (el_undoDeleteBtn) el_undoDeleteBtn.addEventListener('click', function() {
   if (!isAnalysing) undoDeleteBranch();
 });
 
 // ── Flip Board ──
-document.getElementById('flipBtn').addEventListener('click', function() {
+var el_flipBtn = document.getElementById('flipBtn'); if (el_flipBtn) el_flipBtn.addEventListener('click', function() {
   cg.toggleOrientation();
   if (maiaMode) {
     playerColor = (cg.state.orientation === 'black') ? 'black' : 'white';
@@ -3620,14 +3620,14 @@ document.getElementById('flipBtn').addEventListener('click', function() {
 });
 
 // ── Explorer Toggle (Maia mode) ──
-document.getElementById('explorerToggleBtn').addEventListener('click', function() {
+var el_explorerToggleBtn = document.getElementById('explorerToggleBtn'); if (el_explorerToggleBtn) el_explorerToggleBtn.addEventListener('click', function() {
   var parent = document.getElementById('explorerContent').parentElement;
   parent.classList.toggle('explorer-hidden');
   this.textContent = parent.classList.contains('explorer-hidden') ? '\u25B6' : '\u25BC';
 });
 
 // ── Play vs Coach (Maia AI) ──
-document.getElementById('coachPlayBtn').addEventListener('click', function() {
+var el_coachPlayBtn = document.getElementById('coachPlayBtn'); if (el_coachPlayBtn) el_coachPlayBtn.addEventListener('click', function() {
   // Toggle off
   if (maiaMode) {
     stopMaiaMode();
@@ -3677,10 +3677,10 @@ document.getElementById('coachPlayBtn').addEventListener('click', function() {
 });
 
 // ── Suggest Best Move ──
-document.getElementById('suggestBtn').addEventListener('click', suggestBestMove);
+var el_suggestBtn = document.getElementById('suggestBtn'); if (el_suggestBtn) el_suggestBtn.addEventListener('click', suggestBestMove);
 
 // ── TTS Toggle ──
-document.getElementById('ttsToggle').addEventListener('click', function() {
+var el_ttsToggle = document.getElementById('ttsToggle'); if (el_ttsToggle) el_ttsToggle.addEventListener('click', function() {
   ttsEnabled = !ttsEnabled;
   this.textContent = ttsEnabled ? '\uD83D\uDD0A Voice: ON' : '\uD83D\uDD07 Voice: OFF';
   this.classList.toggle('tts-on', ttsEnabled);
@@ -3694,28 +3694,28 @@ document.getElementById('ttsToggle').addEventListener('click', function() {
 });
 
 // ── Rating Select ──
-document.getElementById('ratingSelect').addEventListener('change', function() {
+var el_ratingSelect = document.getElementById('ratingSelect'); if (el_ratingSelect) el_ratingSelect.addEventListener('change', function() {
   saveRatingPref(this.value);
   _lastExplorerFen = '';
   updateExplorer();
 });
 
 // ── API Token ──
-document.getElementById('tokenSaveBtn').addEventListener('click', function() {
+var el_tokenSaveBtn = document.getElementById('tokenSaveBtn'); if (el_tokenSaveBtn) el_tokenSaveBtn.addEventListener('click', function() {
   saveApiToken(document.getElementById('apiToken').value.trim());
   updateExplorer();
 });
-document.getElementById('apiToken').addEventListener('keydown', function(e) {
+var el_apiToken = document.getElementById('apiToken'); if (el_apiToken) el_apiToken.addEventListener('keydown', function(e) {
   if (e.key === 'Enter') document.getElementById('tokenSaveBtn').click();
 });
 
 // ── FEN input enter key ──
-document.getElementById('fenInput').addEventListener('keydown', function(e) {
+var el_fenInput = document.getElementById('fenInput'); if (el_fenInput) el_fenInput.addEventListener('keydown', function(e) {
   if (e.key === 'Enter') document.getElementById('positionBtn').click();
 });
 
 // ── PGN input paste shortcut ──
-document.getElementById('pgnInput').addEventListener('keydown', function(e) {
+var el_pgnInput = document.getElementById('pgnInput'); if (el_pgnInput) el_pgnInput.addEventListener('keydown', function(e) {
   if (e.key === 'Enter' && e.ctrlKey) document.getElementById('reviewBtn').click();
 });
 
@@ -3782,10 +3782,10 @@ function renderSyncGames(games) {
     '<span class="sync-page-num">' + (_syncPage + 1) + '/' + totalPages + '</span>' +
     '<button class="btn-sm" ' + (_syncPage >= totalPages - 1 ? 'disabled' : '') + ' id="syncNextBtn">Next &#9654;</button>';
   list.appendChild(nav);
-  document.getElementById('syncPrevBtn').addEventListener('click', function() {
+  var el_syncPrevBtn = document.getElementById('syncPrevBtn'); if (el_syncPrevBtn) el_syncPrevBtn.addEventListener('click', function() {
     if (_syncPage > 0) { _syncPage--; renderSyncGames(games); }
   });
-  document.getElementById('syncNextBtn').addEventListener('click', function() {
+  var el_syncNextBtn = document.getElementById('syncNextBtn'); if (el_syncNextBtn) el_syncNextBtn.addEventListener('click', function() {
     if (_syncPage < totalPages - 1) { _syncPage++; renderSyncGames(games); }
   });
 }
@@ -3830,8 +3830,8 @@ function doSync() {
     });
 }
 
-document.getElementById('syncBtn').addEventListener('click', doSync);
-document.getElementById('chessUserInput').addEventListener('keydown', function(e) {
+var el_syncBtn = document.getElementById('syncBtn'); if (el_syncBtn) el_syncBtn.addEventListener('click', doSync);
+var el_chessUserInput = document.getElementById('chessUserInput'); if (el_chessUserInput) el_chessUserInput.addEventListener('keydown', function(e) {
   if (e.key === 'Enter') doSync();
 });
 
