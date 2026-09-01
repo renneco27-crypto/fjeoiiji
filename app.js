@@ -857,6 +857,19 @@ function coachReset(text) {
   }
 }
 
+var typeTimer = null, talkTimer = null;
+function talk(text) {
+  var bot = document.getElementById('coachBot');
+  if (!bot) return;
+  bot.classList.add('talking');
+  var plain = text.replace(/<[^>]*>?/gm, ''); // strip html
+  var speed = 35;
+  if (talkTimer) clearTimeout(talkTimer);
+  talkTimer = setTimeout(function() {
+    bot.classList.remove('talking');
+  }, plain.length * speed + 400);
+}
+
 function coachProgress(text) {
   var color = '#c9a24b';
   var bot = document.getElementById('coachBot');
@@ -1584,7 +1597,7 @@ function classifyMove(topBefore, secondBefore, afterLine, playedUci, boardBefore
       var attackerVal = PIECE_VAL[movingPiece.type] || 0;
       var captureVal  = PIECE_VAL[capturedPiece.type] || 0;
       var opponentColor = movingPiece.color === 'w' ? 'b' : 'w';
-      var squareDefended = boardBefore.isSquareAttacked(to, opponentColor);
+      var squareDefended = true; // Fallback since old chess.js doesn't expose attacked()
       // Net material: we gain captureVal but lose attackerVal if square is defended
       var netLoss = squareDefended ? (attackerVal - captureVal) : 0;
       if (netLoss >= 4) return 'blunder'; // e.g. queen (9) - bishop (3) = 6 net loss
