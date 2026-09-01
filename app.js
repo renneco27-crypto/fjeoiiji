@@ -2169,7 +2169,7 @@ function runGameReview() {
   // Cancel any active playback/landmark timer from a previous review
   if (playbackTimer) { clearTimeout(playbackTimer); playbackTimer = null; }
   playbackCancelled = true;
-  document.getElementById('landmarkNavRow').style.display = 'none';
+  var lnav = document.getElementById("landmarkNavRow"); if (lnav) lnav.style.display = "none";
 
   var pgn = document.getElementById('pgnInput').value.trim();
   if (!pgn) {
@@ -2692,13 +2692,13 @@ var reviewPhase = 'navigate'; // 'navigate' | 'takeaway'
 function startLandmarkPlayback() {
   if (!reviewData || reviewData.landmarks.length === 0) {
     coachReset('No significant landmarks found in this game.');
-    document.getElementById('landmarkNavRow').style.display = 'none';
+    var lnav = document.getElementById("landmarkNavRow"); if (lnav) lnav.style.display = "none";
     return;
   }
 
   playbackCancelled = false;
   reviewData.currentLandmark = -1;
-  document.getElementById('landmarkNavRow').style.display = '';
+  var lnav = document.getElementById("landmarkNavRow"); if (lnav) lnav.style.display = "";
   updateLandmarkCounter();
   game = new Chess();
   updateBoard();
@@ -2707,7 +2707,7 @@ function startLandmarkPlayback() {
 
 function advanceToLandmark(idx) {
   if (playbackCancelled || idx >= reviewData.landmarks.length) {
-    document.getElementById('landmarkNavRow').style.display = 'none';
+    var lnav = document.getElementById("landmarkNavRow"); if (lnav) lnav.style.display = "none";
     reviewPhase = 'takeaway';
     showTakeaway();
     return;
@@ -2861,7 +2861,7 @@ function updateLandmarkCounter() {
 function cancelReview() {
   if (playbackTimer) clearTimeout(playbackTimer);
   playbackCancelled = true;
-  document.getElementById('landmarkNavRow').style.display = 'none';
+  var lnav = document.getElementById("landmarkNavRow"); if (lnav) lnav.style.display = "none";
   currentMode = 'interactive';
   reviewPhase = 'navigate';
   branches = [];
@@ -3606,7 +3606,7 @@ var el_nextLandmarkBtn = document.getElementById('nextLandmarkBtn'); if (el_next
   playbackCancelled = false;
   var nextIdx = reviewData.currentLandmark + 1;
   if (nextIdx >= reviewData.landmarks.length) {
-    document.getElementById('landmarkNavRow').style.display = 'none';
+    var lnav = document.getElementById("landmarkNavRow"); if (lnav) lnav.style.display = "none";
     reviewPhase = 'takeaway';
     showTakeaway();
   } else {
