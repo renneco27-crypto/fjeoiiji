@@ -556,15 +556,14 @@ html, body {
 
 .board-frame {
   position: relative;
-  width: min(calc(100vh - 160px), calc(100vw - 580px), 580px);
-  height: min(calc(100vh - 160px), calc(100vw - 580px), 580px);
-  min-width: 320px;
-  min-height: 320px;
+  width: 100%;
+  max-width: 580px;
+  max-height: 580px;
   aspect-ratio: 1 / 1;
   border-radius: 4px;
   overflow: hidden;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
-  flex-shrink: 0;
+  flex: 0 0 auto;
 }
 
 .board-wrap, #board {
@@ -1213,7 +1212,7 @@ cg-board {
   user-select: none;
   line-height: 0;
   background-size: 100% 100%;
-  background-image: var(--fallback-theme-board-style-image), url('https://images.chesscomfiles.com/chess-themes/boards/green/150.png');
+  background-image: url('images/150.6d781.png'), var(--fallback-theme-board-style-image), url('https://images.chesscomfiles.com/chess-themes/boards/green/150.png');
   background-color: #739552;
 }
 

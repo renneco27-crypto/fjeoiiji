@@ -1,0 +1,372 @@
+{
+  "app.js": {
+    "mtime": 1788223041.359227,
+    "ast_hash": "c373df9cb567b8645906aae2d131e5a2",
+    "semantic_hash": ""
+  },
+  "chess.js": {
+    "mtime": 1788172988.8368175,
+    "ast_hash": "38466a21f5b84b77f86b28dff4f800d9",
+    "semantic_hash": "38466a21f5b84b77f86b28dff4f800d9"
+  },
+  "chessground.js": {
+    "mtime": 1788172988.8527992,
+    "ast_hash": "50f74081240f3863ca113d4711d23d5a",
+    "semantic_hash": "50f74081240f3863ca113d4711d23d5a"
+  },
+  "export_maia3.py": {
+    "mtime": 1788172988.878484,
+    "ast_hash": "7cedf05503184f0c220ac95e2ddadfd7",
+    "semantic_hash": "7cedf05503184f0c220ac95e2ddadfd7"
+  },
+  "server.py": {
+    "mtime": 1788172989.5350652,
+    "ast_hash": "74398f6e3cd27a8a255978c655241ccb",
+    "semantic_hash": "74398f6e3cd27a8a255978c655241ccb"
+  },
+  "stockfish.js": {
+    "mtime": 1788172989.561383,
+    "ast_hash": "6448b30928ee20c7c1d791662d80dd5a",
+    "semantic_hash": "6448b30928ee20c7c1d791662d80dd5a"
+  },
+  "testv1/package.json": {
+    "mtime": 1788172990.0438492,
+    "ast_hash": "859cfadd61c324e8c29782a66cfa6e73",
+    "semantic_hash": "859cfadd61c324e8c29782a66cfa6e73"
+  },
+  "Readme.md": {
+    "mtime": 1788172988.7993474,
+    "ast_hash": "32d9a110ab6b886c7c2d2067de3f1b68",
+    "semantic_hash": ""
+  },
+  "index.html": {
+    "mtime": 1788222511.743438,
+    "ast_hash": "2599c082c1395b507722c69cf33fa315",
+    "semantic_hash": ""
+  },
+  "favicon.svg": {
+    "mtime": 1788172988.8980064,
+    "ast_hash": "8d717361661d9b6f89f718603e80b11a",
+    "semantic_hash": ""
+  },
+  "images/150.6d781.png": {
+    "mtime": 1788222184.2242837,
+    "ast_hash": "bbfda1a27d1024910ac2182077a48cbe",
+    "semantic_hash": ""
+  },
+  "images/200.24e65.png": {
+    "mtime": 1788222184.729715,
+    "ast_hash": "d438a5c079dcc601667851c786949c48",
+    "semantic_hash": ""
+  },
+  "images/3dboard.24e65.jpg": {
+    "mtime": 1788222184.758711,
+    "ast_hash": "ba954c5a585dfcf7eeb5b81dbc316fcb",
+    "semantic_hash": ""
+  },
+  "images/3dboardcoordinates.24e65.png": {
+    "mtime": 1788222184.787042,
+    "ast_hash": "3d06c2085df84398bb5cc960b8b27f7c",
+    "semantic_hash": ""
+  },
+  "images/android-chrome-144x144.090f49e5.ca213.png": {
+    "mtime": 1788222185.17719,
+    "ast_hash": "44da47377dfef0c3e34e0e0c4fb9e77d",
+    "semantic_hash": ""
+  },
+  "images/android-chrome-192x192.25da7247.ca213.png": {
+    "mtime": 1788222185.120103,
+    "ast_hash": "66de905b619b942c18cfa829b908fa4d",
+    "semantic_hash": ""
+  },
+  "images/android-chrome-512x512.c15cab42.ca213.png": {
+    "mtime": 1788222185.1506486,
+    "ast_hash": "b1e85eabd81884b773372e7688f8a25c",
+    "semantic_hash": ""
+  },
+  "images/apple-touch-icon.7aaa2d1f.ca213.png": {
+    "mtime": 1788222183.5062404,
+    "ast_hash": "e67ebd8af4b8b0a669b7738f45d60f35",
+    "semantic_hash": ""
+  },
+  "images/avatar-mask-160.b6fcd58f.81d83.svg": {
+    "mtime": 1788222184.0259454,
+    "ast_hash": "b6fcd58f1823e0d231737e09e39c88da",
+    "semantic_hash": ""
+  },
+  "images/avatar-mask-24.a72f7773.81d83.svg": {
+    "mtime": 1788222184.0016267,
+    "ast_hash": "a72f7773806c250905314168d55ef203",
+    "semantic_hash": ""
+  },
+  "images/avatar-mask-32.405d6790.81d83.svg": {
+    "mtime": 1788222183.9766326,
+    "ast_hash": "405d67909d2a4daea83d72dd6c5a8f90",
+    "semantic_hash": ""
+  },
+  "images/avatar-mask-40.562f1d2c.81d83.svg": {
+    "mtime": 1788222183.9516294,
+    "ast_hash": "562f1d2c77a0bd7471ee8050c956a49b",
+    "semantic_hash": ""
+  },
+  "images/avatar-mask-48.8e07b74f.81d83.svg": {
+    "mtime": 1788222183.9276333,
+    "ast_hash": "8e07b74fadaba61ece9db2c94c48c4ca",
+    "semantic_hash": ""
+  },
+  "images/avatar-mask-64.69f1737c.81d83.svg": {
+    "mtime": 1788222183.8980873,
+    "ast_hash": "69f1737c790df7523cb0c5af29c021c3",
+    "semantic_hash": ""
+  },
+  "images/avatar-mask-80.e5f68f79.81d83.svg": {
+    "mtime": 1788222183.8466349,
+    "ast_hash": "e5f68f79c9a8b3e89b01ac1c2ac54893",
+    "semantic_hash": ""
+  },
+  "images/avatar-mask-96.7d0c786e.81d83.svg": {
+    "mtime": 1788222183.8726633,
+    "ast_hash": "7d0c786e63f30004067478e0b4cbff2c",
+    "semantic_hash": ""
+  },
+  "images/avatar-mask.7a13885f.81d83.svg": {
+    "mtime": 1788222183.8211,
+    "ast_hash": "7a13885f2c1d10bb4a7e2ee48db16969",
+    "semantic_hash": ""
+  },
+  "images/bb.38891.png": {
+    "mtime": 1788222185.0170152,
+    "ast_hash": "ed5877a2e6c2d3d14dbfa1cfdb870b9c",
+    "semantic_hash": ""
+  },
+  "images/bb.e7eb4.png": {
+    "mtime": 1788222184.409951,
+    "ast_hash": "8caa7aeca82b89770ffac1088a781fb7",
+    "semantic_hash": ""
+  },
+  "images/binoculars.f9a0c.svg": {
+    "mtime": 1788222183.688801,
+    "ast_hash": "3ff92653063a0b1de7e821120a4fe09a",
+    "semantic_hash": ""
+  },
+  "images/bk.38891.png": {
+    "mtime": 1788222185.0920937,
+    "ast_hash": "47cbdb204ae26cb5fb2a12e363d84fed",
+    "semantic_hash": ""
+  },
+  "images/bk.e7eb4.png": {
+    "mtime": 1788222184.5502849,
+    "ast_hash": "7b6aa63a5c86e4c6f1c2f4e18a9965f0",
+    "semantic_hash": ""
+  },
+  "images/bn.38891.png": {
+    "mtime": 1788222184.987998,
+    "ast_hash": "e84740da22f468a07a0d026cec9b1330",
+    "semantic_hash": ""
+  },
+  "images/bn.e7eb4.png": {
+    "mtime": 1788222184.4544928,
+    "ast_hash": "7b2dffd1d0789ac0a6a3bddd46540c50",
+    "semantic_hash": ""
+  },
+  "images/bp.38891.png": {
+    "mtime": 1788222184.961002,
+    "ast_hash": "cce7d827d9144584ffd9e03b34e27b89",
+    "semantic_hash": ""
+  },
+  "images/bp.e7eb4.png": {
+    "mtime": 1788222184.5207424,
+    "ast_hash": "6d0b1b6922a0f62e28fc7299f01ac1f2",
+    "semantic_hash": ""
+  },
+  "images/bq.38891.png": {
+    "mtime": 1788222185.0677764,
+    "ast_hash": "0a5e1195555dbba2a3e6799c8563709f",
+    "semantic_hash": ""
+  },
+  "images/bq.e7eb4.png": {
+    "mtime": 1788222184.5752718,
+    "ast_hash": "f7aafecaf69f7fc7a9cf8a53ce90597d",
+    "semantic_hash": ""
+  },
+  "images/br.38891.png": {
+    "mtime": 1788222185.040073,
+    "ast_hash": "57b98e7d76b0e7832ef7cb795dd3f041",
+    "semantic_hash": ""
+  },
+  "images/br.e7eb4.png": {
+    "mtime": 1788222184.4907339,
+    "ast_hash": "f0c54e59233e67364962d44b4778fae9",
+    "semantic_hash": ""
+  },
+  "images/captured-pieces.2d3c7.png": {
+    "mtime": 1788222185.2011824,
+    "ast_hash": "c3c664acf798873466495018328ab72b",
+    "semantic_hash": ""
+  },
+  "images/ellipsis.f9a0c.svg": {
+    "mtime": 1788222183.7680738,
+    "ast_hash": "1154afc1c4295705576301a2be8e8ab4",
+    "semantic_hash": ""
+  },
+  "images/favicon-32x32.adae7142.ca213.png": {
+    "mtime": 1788222183.5598016,
+    "ast_hash": "b35ba0b13c23d636e7bee9ec193a5287",
+    "semantic_hash": ""
+  },
+  "images/favicon.5d6cb047.ca213.svg": {
+    "mtime": 1788222183.5813322,
+    "ast_hash": "5d6cb0478423c1db252146fafce9cec2",
+    "semantic_hash": ""
+  },
+  "images/flags-128.76dd441f.2d3c7.png": {
+    "mtime": 1788222184.131508,
+    "ast_hash": "72d5f5df1d563403e537efbfec6dac04",
+    "semantic_hash": ""
+  },
+  "images/flags-16.b7742471.2d3c7.png": {
+    "mtime": 1788222184.0509498,
+    "ast_hash": "626d08ef8ba2642c3e6e03a101cece5d",
+    "semantic_hash": ""
+  },
+  "images/flags-32.f9ff654b.2d3c7.png": {
+    "mtime": 1788222184.0779476,
+    "ast_hash": "caa6275fd05212dfd429db34322cef26",
+    "semantic_hash": ""
+  },
+  "images/flags-64.f49e6d22.2d3c7.png": {
+    "mtime": 1788222184.101944,
+    "ast_hash": "d119308b638979e19b2a67ae12677bc3",
+    "semantic_hash": ""
+  },
+  "images/friends.f9a0c.svg": {
+    "mtime": 1788222183.7369237,
+    "ast_hash": "3e9cb95b7ef8f350c6d5b330fcb1f2b0",
+    "semantic_hash": ""
+  },
+  "images/game-preview-loading.8677fb94.4cfbc.png": {
+    "mtime": 1788222184.6042857,
+    "ast_hash": "62082effe7ec340fe5e9e0176d8af227",
+    "semantic_hash": ""
+  },
+  "images/lessons.f9a0c.svg": {
+    "mtime": 1788222183.661821,
+    "ast_hash": "30f752675028b8389baf0f1c0b21b1ac",
+    "semantic_hash": ""
+  },
+  "images/logo-black.16b4b.svg": {
+    "mtime": 1788222184.6348593,
+    "ast_hash": "cacf62ff9b0716777cb50bfac0f8fca1",
+    "semantic_hash": ""
+  },
+  "images/logo-pawn.16b4b.svg": {
+    "mtime": 1788222184.700849,
+    "ast_hash": "1f4b362e4acd3e567391a4ac987b4c95",
+    "semantic_hash": ""
+  },
+  "images/logo.16b4b.svg": {
+    "mtime": 1788222184.668853,
+    "ast_hash": "37fd465e0f9bf4bbe469fcc73c0349be",
+    "semantic_hash": ""
+  },
+  "images/media-camera-photo.825fd7c4.e51d0.svg": {
+    "mtime": 1788222184.1780052,
+    "ast_hash": "825fd7c4d4f6beff039a8a6bc79ccb87",
+    "semantic_hash": ""
+  },
+  "images/play-white.f9a0c.svg": {
+    "mtime": 1788222183.6103666,
+    "ast_hash": "fd98357e47e56b2a0d6d260caaeaa052",
+    "semantic_hash": ""
+  },
+  "images/puzzle-piece.f9a0c.svg": {
+    "mtime": 1788222183.635923,
+    "ast_hash": "c0108835bbe7d13ffbf9916be191af8e",
+    "semantic_hash": ""
+  },
+  "images/safari-pinned-tab.1bf62bbf.ca213.svg": {
+    "mtime": 1788222183.4802315,
+    "ast_hash": "1bf62bbf081a939cffca40fdd13c3d17",
+    "semantic_hash": ""
+  },
+  "images/share-analysis-board.4b839d53.5c9bd.png": {
+    "mtime": 1788222183.7970748,
+    "ast_hash": "8f95b3d4630ff1bf33c8b4a3b16be690",
+    "semantic_hash": ""
+  },
+  "images/square_preview.24e65.png": {
+    "mtime": 1788222184.8110616,
+    "ast_hash": "f7e7f4997f4167d67059bed138c897b6",
+    "semantic_hash": ""
+  },
+  "images/training.f9a0c.svg": {
+    "mtime": 1788222183.7108119,
+    "ast_hash": "4c3463d6a8e56cd59c563ef7d7823cc5",
+    "semantic_hash": ""
+  },
+  "images/user-image.007dad08.4cfbc.svg": {
+    "mtime": 1788222184.154056,
+    "ast_hash": "007dad080791e15da2805cc4dea4e315",
+    "semantic_hash": ""
+  },
+  "images/wb.38891.png": {
+    "mtime": 1788222184.8876271,
+    "ast_hash": "7a3f5254a3befdb671aae0007f47f1b3",
+    "semantic_hash": ""
+  },
+  "images/wb.e7eb4.png": {
+    "mtime": 1788222184.2682853,
+    "ast_hash": "abd5b8656a0d2302d3aa26e7610fd8e0",
+    "semantic_hash": ""
+  },
+  "images/wk.38891.png": {
+    "mtime": 1788222184.9382284,
+    "ast_hash": "d62c0f75c795c10fecd5d32ee6a64aca",
+    "semantic_hash": ""
+  },
+  "images/wk.e7eb4.png": {
+    "mtime": 1788222184.3142896,
+    "ast_hash": "cdf652f00ba5a57bafdad9abbff2cd2a",
+    "semantic_hash": ""
+  },
+  "images/wn.38891.png": {
+    "mtime": 1788222184.8645942,
+    "ast_hash": "ac3f8626e63c4adb04404e52914dbd62",
+    "semantic_hash": ""
+  },
+  "images/wn.e7eb4.png": {
+    "mtime": 1788222184.2027292,
+    "ast_hash": "3f9ee1a84441ff11718564edc959e3cb",
+    "semantic_hash": ""
+  },
+  "images/wp.38891.png": {
+    "mtime": 1788222184.8375928,
+    "ast_hash": "2faff291eb4d1f81faf8dcd912790970",
+    "semantic_hash": ""
+  },
+  "images/wp.e7eb4.png": {
+    "mtime": 1788222184.2462986,
+    "ast_hash": "4dfd06efcc351a586ac63ecd0a97e283",
+    "semantic_hash": ""
+  },
+  "images/wq.38891.png": {
+    "mtime": 1788222184.913162,
+    "ast_hash": "e9248adcffac39e9660f7879071dd1ab",
+    "semantic_hash": ""
+  },
+  "images/wq.e7eb4.png": {
+    "mtime": 1788222184.2892828,
+    "ast_hash": "6a967682818f6dbc7ee71365520f35f0",
+    "semantic_hash": ""
+  },
+  "images/wr.38891.png": {
+    "mtime": 1788222185.227338,
+    "ast_hash": "971900affd571e6e435543987391380a",
+    "semantic_hash": ""
+  },
+  "images/wr.e7eb4.png": {
+    "mtime": 1788222184.3429108,
+    "ast_hash": "337085e74f6c319a50da6e4f6bb047d5",
+    "semantic_hash": ""
+  }
+}

@@ -1,6 +1,32 @@
 // ═══════════════════════════════════════════════════════
+// GLOBAL DEBUGGER (Catches silent failures)
+// ═══════════════════════════════════════════════════════
+window.onerror = function(msg, url, lineNo, columnNo, error) {
+  var errDiv = document.getElementById('debugOverlay');
+  if (!errDiv) {
+    errDiv = document.createElement('div');
+    errDiv.id = 'debugOverlay';
+    errDiv.style.cssText = 'position:fixed;top:0;left:0;right:0;background:rgba(255,0,0,0.9);color:white;padding:10px;z-index:9999;font-family:monospace;white-space:pre-wrap;';
+    document.body.appendChild(errDiv);
+  }
+  errDiv.innerHTML += '<b>Error:</b> ' + msg + '<br><b>Line:</b> ' + lineNo + ':' + columnNo + '<br><b>Trace:</b> ' + (error && error.stack ? error.stack : '') + '<hr>';
+  return false;
+};
+window.addEventListener('unhandledrejection', function(e) {
+  var errDiv = document.getElementById('debugOverlay');
+  if (!errDiv) {
+    errDiv = document.createElement('div');
+    errDiv.id = 'debugOverlay';
+    errDiv.style.cssText = 'position:fixed;top:0;left:0;right:0;background:rgba(255,0,0,0.9);color:white;padding:10px;z-index:9999;font-family:monospace;white-space:pre-wrap;';
+    document.body.appendChild(errDiv);
+  }
+  errDiv.innerHTML += '<b>Unhandled Promise:</b> ' + (e.reason && e.reason.stack ? e.reason.stack : e.reason) + '<hr>';
+});
+
+// ═══════════════════════════════════════════════════════
 // CONFIGURATION
 // ═══════════════════════════════════════════════════════
+
 var STOCKFISH_WORKER_URL = 'stockfish.js';
 var EDGE_TTS_URL = '';
 var EDGE_TTS_VOICE = 'en-US-AndrewNeural';
@@ -1636,21 +1662,42 @@ function showPromotionPicker(from, to, color, callback) {
 
 function initBoard() {
   var el = document.getElementById('board');
-  if (!el) return;
-  cg = ChessgroundLib.Chessground(el, {
-    fen: game ? game.fen() : 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1',
-    orientation: 'white',
-    coordinates: true,
-    movable: { color: 'both', free: false, dests: getLegalDests() },
-    events: { move: onMove },
-    animation: { enabled: true, duration: 150 },
-    highlight: { lastMove: true, check: true },
-    draggable: { showGhost: true }
-  });
+  if (!el) {
+    console.error('[Board] Fatal Error: #board element not found!');
+    return;
+  }
+  
+  var rect = el.getBoundingClientRect();
+  console.log('[Board] Initializing board. Computed dimensions:', rect.width, 'x', rect.height);
+  
+  if (rect.height === 0 || rect.width === 0) {
+    console.warn('[Board] Warning: Board container has 0 height/width! Forcing dimensions to prevent render failure.');
+    el.style.minWidth = '320px';
+    el.style.minHeight = '320px';
+  }
+
+  try {
+    cg = ChessgroundLib.Chessground(el, {
+      fen: game ? game.fen() : 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1',
+      orientation: 'white',
+      coordinates: true,
+      movable: { color: 'both', free: false, dests: getLegalDests() },
+      events: { move: onMove },
+      animation: { enabled: true, duration: 150 },
+      highlight: { lastMove: true, check: true },
+      draggable: { showGhost: true }
+    });
+    console.log('[Board] Chessground initialized successfully.');
+  } catch (err) {
+    console.error('[Board] Failed to initialize Chessground:', err);
+    throw err;
+  }
+
   window.addEventListener('resize', function() {
     if (cg && cg.redrawAll) cg.redrawAll();
   });
 }
+
 
 
 function updateBoard() {

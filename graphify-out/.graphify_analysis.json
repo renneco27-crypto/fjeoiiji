@@ -1,0 +1,458 @@
+{
+  "communities": {
+    "0": [
+      "chess",
+      "chess_algebraic",
+      "chess_ascii",
+      "chess_attacked",
+      "chess_build_move",
+      "chess_clear",
+      "chess_clone",
+      "chess_file",
+      "chess_generate_fen",
+      "chess_generate_moves",
+      "chess_get",
+      "chess_get_disambiguator",
+      "chess_in_check",
+      "chess_in_checkmate",
+      "chess_in_stalemate",
+      "chess_in_threefold_repetition",
+      "chess_infer_piece_type",
+      "chess_insufficient_material",
+      "chess_is_digit",
+      "chess_king_attacked",
+      "chess_load",
+      "chess_make_move",
+      "chess_make_pretty",
+      "chess_mask",
+      "chess_move_from_san",
+      "chess_move_to_san",
+      "chess_parse_pgn_header",
+      "chess_perft",
+      "chess_prune_comments",
+      "chess_push",
+      "chess_put",
+      "chess_rank",
+      "chess_rationale_1184",
+      "chess_rationale_1191",
+      "chess_remove",
+      "chess_reset",
+      "chess_set_header",
+      "chess_stripped_san",
+      "chess_swap_color",
+      "chess_trim",
+      "chess_undo_move",
+      "chess_update_setup",
+      "chess_validate_fen"
+    ],
+    "1": [
+      "chessground",
+      "chessground_addsquare",
+      "chessground_animate",
+      "chessground_appendvalue",
+      "chessground_arrowmargin",
+      "chessground_bindboard",
+      "chessground_canceldropmode",
+      "chessground_candrop",
+      "chessground_canpredrop",
+      "chessground_computeplan",
+      "chessground_computesquareclasses",
+      "chessground_customsvghash",
+      "chessground_debounceredraw",
+      "chessground_explosion",
+      "chessground_linewidth",
+      "chessground_memo",
+      "chessground_modifiershash",
+      "chessground_piecehash",
+      "chessground_poszindex",
+      "chessground_removenodes",
+      "chessground_render_1",
+      "chessground_render_2",
+      "chessground_renderresized",
+      "chessground_renderresized_1",
+      "chessground_setpieces",
+      "chessground_setstage",
+      "chessground_shapehash",
+      "chessground_step",
+      "chessground_toggleorientation",
+      "chessground_tryautocastle",
+      "stockfish_p"
+    ],
+    "2": [
+      "app",
+      "app_buildgameitem",
+      "app_buildrefutationnarration",
+      "app_cancelreview",
+      "app_classifyandpushmove",
+      "app_classifymove",
+      "app_createanalysispool",
+      "app_detectbrilliantsacrifice",
+      "app_dosync",
+      "app_doupdateexplorer",
+      "app_endreview",
+      "app_explorerfetchopts",
+      "app_fetchexplorermoves",
+      "app_fetchopening",
+      "app_getapitoken",
+      "app_getthresh",
+      "app_initengine",
+      "app_initvoice",
+      "app_loadapitoken",
+      "app_loadratingpref",
+      "app_normalizeratingtolichessbucket",
+      "app_readsan",
+      "app_renderexplorer",
+      "app_rendersyncgames",
+      "app_saveapitoken",
+      "app_saveratingpref",
+      "app_showrefutation",
+      "app_tocp",
+      "app_updatemovehighlight"
+    ],
+    "3": [
+      "chessground_circlewidth",
+      "chessground_createelement",
+      "chessground_makecustombrush",
+      "chessground_opacity",
+      "chessground_orient",
+      "chessground_pos2user",
+      "chessground_render",
+      "chessground_renderarrow",
+      "chessground_rendercircle",
+      "chessground_rendercoords",
+      "chessground_rendercustomsvg",
+      "chessground_rendermarker",
+      "chessground_rendershape",
+      "chessground_rendershape_1",
+      "chessground_rendersvg",
+      "chessground_renderwrap",
+      "chessground_setattributes",
+      "chessground_syncdefs",
+      "chessground_syncshapes"
+    ],
+    "4": [
+      "chessground_basemove",
+      "chessground_basenewpiece",
+      "chessground_baseusermove",
+      "chessground_calluserfunction",
+      "chessground_cancelmove",
+      "chessground_drop",
+      "chessground_dropnewpiece",
+      "chessground_end",
+      "chessground_playpredrop",
+      "chessground_playpremove",
+      "chessground_reset",
+      "chessground_setpredrop",
+      "chessground_setpremove",
+      "chessground_stop",
+      "chessground_unselect",
+      "chessground_unsetpredrop",
+      "chessground_unsetpremove",
+      "chessground_usermove"
+    ],
+    "5": [
+      "app_buildmaiamovevocab",
+      "app_coachprogress",
+      "app_deletebranch",
+      "app_deletebranchesat",
+      "app_genbranchid",
+      "app_gotobranch",
+      "app_gotomove",
+      "app_handlereviewmove",
+      "app_initmaiasession",
+      "app_jumptolandmark",
+      "app_promotebranch",
+      "app_renderhistory",
+      "app_showbranchpopover",
+      "app_undodeletebranch",
+      "app_updateexplorer",
+      "app_updatenavdisplay",
+      "app_updateundobtn"
+    ],
+    "6": [
+      "app_canceltts",
+      "app_checkdrawconditions",
+      "app_domaiaresponse",
+      "app_drawgraph",
+      "app_evalposition",
+      "app_isinsufficientmaterial",
+      "app_onmaiausermove",
+      "app_recordposition",
+      "app_startcoach",
+      "app_startmaiagame",
+      "app_tryparseucimove",
+      "app_updateevaldisplay"
+    ],
+    "7": [
+      "app_getlegaldests",
+      "app_hidesfpreview",
+      "app_initboard",
+      "app_ispromotionmove",
+      "app_onmove",
+      "app_onmovewithpromotion",
+      "app_playchesssound",
+      "app_showpromotionpicker",
+      "app_stopmaiamode",
+      "app_stoprefutationreplay",
+      "app_tocolor",
+      "app_updateboard"
+    ],
+    "8": [
+      "app_handlebranchmove",
+      "app_pickmsg",
+      "app_showlandmark",
+      "app_showsfpreview",
+      "app_speakbrowser",
+      "app_speakedgetts",
+      "app_speaktext",
+      "app_speaktextwithcb",
+      "app_triggerfx",
+      "app_typewrite",
+      "app_updatecoach",
+      "app_updatelandmarkcounter"
+    ],
+    "9": [
+      "chessground_computesquarecenter",
+      "chessground_dragnewpiece",
+      "chessground_eventbrush",
+      "chessground_getkeyatdompos",
+      "chessground_getsnappedkeyatdompos",
+      "chessground_isdraggable",
+      "chessground_piececloseto",
+      "chessground_pieceelementbykey",
+      "chessground_processdrag",
+      "chessground_processdraw",
+      "chessground_start_1",
+      "chessground_start_2"
+    ],
+    "10": [
+      "app_advancetolandmark",
+      "app_clearmistakeui",
+      "app_coachreset",
+      "app_finishmaiagame",
+      "app_finishreview",
+      "app_parselines",
+      "app_rungamereview",
+      "app_setenginestatus",
+      "app_showtakeaway",
+      "app_startlandmarkplayback",
+      "app_suggestbestmove"
+    ],
+    "11": [
+      "chessground_addshape",
+      "chessground_binddocument",
+      "chessground_cancel_1",
+      "chessground_clear",
+      "chessground_end_1",
+      "chessground_move",
+      "chessground_move_1",
+      "chessground_onchange",
+      "chessground_unbindable",
+      "chessground_updatebounds"
+    ],
+    "12": [
+      "chessground_applyanimation",
+      "chessground_chessground",
+      "chessground_configure",
+      "chessground_deepmerge",
+      "chessground_defaults",
+      "chessground_isplainobject",
+      "chessground_read",
+      "chessground_setcheck",
+      "chessground_start",
+      "chessground_write"
+    ],
+    "13": [
+      "app_analyzepositionalfactors",
+      "app_generatereviewcommentary",
+      "app_staticfallback",
+      "stockfish",
+      "stockfish_d",
+      "stockfish_f",
+      "stockfish_l",
+      "stockfish_n",
+      "stockfish_o"
+    ],
+    "14": [
+      "app_buildmaiainputtensor",
+      "app_elototemp",
+      "app_getmaiamove",
+      "app_getmaiatopmoves",
+      "app_mirrorfen",
+      "app_mirrorsq",
+      "app_mirroruci",
+      "app_samplefromlogits",
+      "app_tokenizeboard"
+    ],
+    "15": [
+      "chess_js",
+      "onnxruntime_web",
+      "testv1_package",
+      "testv1_package_dependencies",
+      "testv1_package_dependencies_chess_js",
+      "testv1_package_dependencies_onnxruntime_web",
+      "testv1_package_devdependencies",
+      "testv1_package_devdependencies_vite_plugin_static_copy",
+      "vite_plugin_static_copy"
+    ],
+    "16": [
+      "chessground_cancel",
+      "chessground_ismovable",
+      "chessground_ispremovable",
+      "chessground_premove",
+      "chessground_removedragelements",
+      "chessground_rookfilesof",
+      "chessground_selectsquare",
+      "chessground_setdropmode",
+      "chessground_setselected"
+    ],
+    "17": [
+      "server",
+      "server_handler",
+      "server_handler_do_get",
+      "server_handler_do_head",
+      "server_handler_end_headers",
+      "server_handler_guess_type",
+      "server_handler_is_path_forbidden"
+    ],
+    "18": [
+      "export_maia3",
+      "export_maia3_args",
+      "export_maia3_rationale_1"
+    ]
+  },
+  "cohesion": {
+    "0": 0.12403100775193798,
+    "1": 0.09032258064516129,
+    "2": 0.11083743842364532,
+    "3": 0.15789473684210525,
+    "4": 0.28104575163398693,
+    "5": 0.20588235294117646,
+    "6": 0.22727272727272727,
+    "7": 0.21212121212121213,
+    "8": 0.21212121212121213,
+    "9": 0.22727272727272727,
+    "10": 0.34545454545454546,
+    "11": 0.2222222222222222,
+    "12": 0.24444444444444444,
+    "13": 0.3611111111111111,
+    "14": 0.25,
+    "15": 0.2222222222222222,
+    "16": 0.25,
+    "17": 0.42857142857142855,
+    "18": 0.6666666666666666
+  },
+  "gods": [
+    {
+      "id": "app_domaiaresponse",
+      "label": "doMaiaResponse()",
+      "degree": 20
+    },
+    {
+      "id": "app_updateboard",
+      "label": "updateBoard()",
+      "degree": 16
+    },
+    {
+      "id": "app_renderhistory",
+      "label": "renderHistory()",
+      "degree": 14
+    },
+    {
+      "id": "app_handlereviewmove",
+      "label": "handleReviewMove()",
+      "degree": 13
+    },
+    {
+      "id": "chess_generate_moves",
+      "label": "generate_moves()",
+      "degree": 13
+    },
+    {
+      "id": "chessground_calluserfunction",
+      "label": "callUserFunction()",
+      "degree": 13
+    },
+    {
+      "id": "app_coachreset",
+      "label": "coachReset()",
+      "degree": 12
+    },
+    {
+      "id": "app_setenginestatus",
+      "label": "setEngineStatus()",
+      "degree": 11
+    },
+    {
+      "id": "app_handlebranchmove",
+      "label": "handleBranchMove()",
+      "degree": 11
+    },
+    {
+      "id": "chessground_dropnewpiece",
+      "label": "dropNewPiece()",
+      "degree": 11
+    }
+  ],
+  "surprises": [
+    {
+      "source": "showPromotionPicker()",
+      "target": "p()",
+      "source_files": [
+        "app.js",
+        "stockfish.js"
+      ],
+      "confidence": "INFERRED",
+      "relation": "indirect_call",
+      "why": "inferred connection - not explicitly stated in source; connects across different repos/directories; bridges separate communities"
+    },
+    {
+      "source": "analyzePositionalFactors()",
+      "target": "file()",
+      "source_files": [
+        "app.js",
+        "chess.js"
+      ],
+      "confidence": "INFERRED",
+      "relation": "indirect_call",
+      "why": "inferred connection - not explicitly stated in source; connects across different repos/directories; bridges separate communities"
+    },
+    {
+      "source": "analyzePositionalFactors()",
+      "target": "f()",
+      "source_files": [
+        "app.js",
+        "stockfish.js"
+      ],
+      "confidence": "INFERRED",
+      "relation": "indirect_call",
+      "why": "inferred connection - not explicitly stated in source; connects across different repos/directories"
+    },
+    {
+      "source": "computePlan()",
+      "target": "p()",
+      "source_files": [
+        "chessground.js",
+        "stockfish.js"
+      ],
+      "confidence": "INFERRED",
+      "relation": "indirect_call",
+      "why": "inferred connection - not explicitly stated in source; connects across different repos/directories"
+    },
+    {
+      "source": "render$1()",
+      "target": "p()",
+      "source_files": [
+        "chessground.js",
+        "stockfish.js"
+      ],
+      "confidence": "INFERRED",
+      "relation": "indirect_call",
+      "why": "inferred connection - not explicitly stated in source; connects across different repos/directories"
+    }
+  ],
+  "tokens": {
+    "input": 0,
+    "output": 0
+  }
+}

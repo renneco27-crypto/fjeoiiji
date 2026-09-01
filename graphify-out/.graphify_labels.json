@@ -1,0 +1,23 @@
+{
+  "0": "chess.js",
+  "1": "chessground.js",
+  "2": "app.js",
+  "3": "renderCircle",
+  "4": "callUserFunction",
+  "5": "handleReviewMove",
+  "6": "doMaiaResponse",
+  "7": "updateBoard",
+  "8": "render$1",
+  "9": "updateExplorer",
+  "10": "coachReset",
+  "11": "bindDocument",
+  "12": "configure",
+  "13": "stockfish.js",
+  "14": "getMaiaMove",
+  "15": "dependencies",
+  "16": "selectSquare",
+  "17": "Handler",
+  "18": "export_maia3.py",
+  "19": "speakText",
+  "20": "Readme.md"
+}
