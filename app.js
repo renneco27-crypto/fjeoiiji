@@ -2,6 +2,7 @@
 // GLOBAL DEBUGGER (Catches silent failures)
 // ═══════════════════════════════════════════════════════
 window.onerror = function(msg, url, lineNo, columnNo, error) {
+  if (msg === 'Script error.' && lineNo === 0) return false; // Ignore generic cross-origin CDN errors
   var errDiv = document.getElementById('debugOverlay');
   if (!errDiv) {
     errDiv = document.createElement('div');
@@ -827,30 +828,66 @@ function coachReset(text) {
   var color = '#c9a24b';
   var bot = document.getElementById('coachBot');
   var box = document.getElementById('dialogueBox');
-  bot.style.setProperty('--mood', color);
-  box.style.setProperty('--mood', color);
-  bot.setAttribute('data-mood', 'good');
-  document.getElementById('botMouth').setAttribute('d', MOUTH.good);
-  document.getElementById('botBrowL').setAttribute('d', BROW_L.good);
-  document.getElementById('botBrowR').setAttribute('d', BROW_R.good);
-  document.getElementById('badgeIcon').textContent = '\u2713';
+  if (bot) {
+    bot.style.setProperty('--mood', color);
+    bot.setAttribute('data-mood', 'good');
+    bot.classList.remove('talking');
+  }
+  if (box) box.style.setProperty('--mood', color);
+  
+  var mouth = document.getElementById('botMouth');
+  if (mouth) mouth.setAttribute('d', MOUTH.good);
+  var browL = document.getElementById('botBrowL');
+  if (browL) browL.setAttribute('d', BROW_L.good);
+  var browR = document.getElementById('botBrowR');
+  if (browR) browR.setAttribute('d', BROW_R.good);
+  
+  var badge = document.getElementById('badgeIcon');
+  if (badge) badge.textContent = '\u2713';
   var lbl = document.getElementById('dialogueLabel');
   var ico = document.getElementById('dialogueIconEl');
-  lbl.textContent = 'Ready';
-  lbl.style.color = color;
-  ico.textContent = '\u2713';
-  ico.style.color = color;
+  if (lbl) { lbl.textContent = 'Ready'; lbl.style.color = color; }
+  if (ico) { ico.textContent = '\u2713'; ico.style.color = color; }
+  
   if (typeTimer) clearInterval(typeTimer);
-  document.getElementById('dialogueText').innerHTML = text || 'Ready when you are. Make a move!';
-  document.getElementById('dialogueText').classList.remove('typing');
-  bot.classList.remove('talking');
+  var dt = document.getElementById('dialogueText');
+  if (dt) {
+    dt.innerHTML = text || 'Ready when you are. Make a move!';
+    dt.classList.remove('typing');
+  }
 }
 
 function coachProgress(text) {
-  var el = document.getElementById('dialogueText');
+  var color = '#c9a24b';
+  var bot = document.getElementById('coachBot');
+  var box = document.getElementById('dialogueBox');
+  if (bot) {
+    bot.style.setProperty('--mood', color);
+    bot.setAttribute('data-mood', 'good');
+  }
+  if (box) box.style.setProperty('--mood', color);
+  
+  var mouth = document.getElementById('botMouth');
+  if (mouth) mouth.setAttribute('d', MOUTH.good);
+  var browL = document.getElementById('botBrowL');
+  if (browL) browL.setAttribute('d', BROW_L.good);
+  var browR = document.getElementById('botBrowR');
+  if (browR) browR.setAttribute('d', BROW_R.good);
+  
+  var badge = document.getElementById('badgeIcon');
+  if (badge) badge.textContent = '\u2026';
+  var lbl = document.getElementById('dialogueLabel');
+  var ico = document.getElementById('dialogueIconEl');
+  if (lbl) { lbl.textContent = 'Thinking'; lbl.style.color = color; }
+  if (ico) { ico.textContent = '\u2026'; ico.style.color = color; }
+  
   if (typeTimer) clearInterval(typeTimer);
-  el.innerHTML = text;
-  el.classList.remove('typing');
+  var dt = document.getElementById('dialogueText');
+  if (dt) {
+    dt.innerHTML = text;
+    dt.classList.remove('typing');
+  }
+  talk(text);
 }
 
 // ═══════════════════════════════════════════════════════
@@ -3098,15 +3135,27 @@ function startMaiaGame(preserveGame) {
   maiaHistory = [];
   gameHistory = [game.fen()]; // Initialize game history for draw detection
   navIdx = -1;
+  
+  // Set top player name and avatar to Coach Girl
+  var topName = document.getElementById('topPlayerName');
+  if (topName) topName.textContent = 'Maia Neural Net';
+  var topAvatarBox = document.querySelector('#topPlayerBar .player-avatar-box');
+  var coachSvgBox = document.getElementById('coachBot');
+  if (topAvatarBox && coachSvgBox) {
+    topAvatarBox.innerHTML = coachSvgBox.innerHTML;
+  }
+
   // Orient board and restrict movable pieces to the player's side
   cg.set({ orientation: playerColor });
   updateBoard(); // uses maiaMode + playerColor to restrict movable
   updateEvalDisplay(0);
   renderHistory();
   drawGraph();
-  document.getElementById('explorerContent').parentElement.classList.add('explorer-hidden');
-  document.getElementById('navBar').style.display = 'none';
-  document.getElementById('pgnInput').value = '';
+  var expParent = document.getElementById('explorerContent').parentElement;
+  if (expParent) expParent.classList.add('explorer-hidden');
+  var pgnInput = document.getElementById('pgnInput');
+  if (pgnInput) pgnInput.value = '';
+
   document.getElementById('fenInput').value = '';
   document.getElementById('maiaDelayRow').style.display = '';
   document.getElementById('explorerToggleBtn').style.display = '';
@@ -3325,10 +3374,22 @@ function stopMaiaMode() {
   maiaHistory = [];
   gameHistory = []; // Clear game history
   playerColor = 'white';
-  document.getElementById('coachPlayBtn').classList.remove('active-coach');
-  document.getElementById('explorerContent').parentElement.classList.remove('explorer-hidden');
-  document.getElementById('maiaDelayRow').style.display = 'none';
-  document.getElementById('explorerToggleBtn').style.display = 'none';
+  
+  var topName = document.getElementById('topPlayerName');
+  if (topName) topName.textContent = 'adamm1973';
+  var topAvatarBox = document.querySelector('#topPlayerBar .player-avatar-box');
+  if (topAvatarBox) {
+    topAvatarBox.innerHTML = '<img src="images/user-image.007dad08.4cfbc.svg" width="28" height="28" alt="Opponent" class="player-avatar-img">';
+  }
+
+  var coachBtn = document.getElementById('coachPlayBtn');
+  if (coachBtn) coachBtn.classList.remove('active-coach');
+  var expParent = document.getElementById('explorerContent').parentElement;
+  if (expParent) expParent.classList.remove('explorer-hidden');
+  var delayRow = document.getElementById('maiaDelayRow');
+  if (delayRow) delayRow.style.display = 'none';
+  var tglBtn = document.getElementById('explorerToggleBtn');
+  if (tglBtn) tglBtn.style.display = 'none';
   // Restore full movability (both sides), keep board orientation as-is
   cg.set({ movable: { color: 'both', dests: getLegalDests() } });
   if (moveHistory.length > 0 && !document.getElementById('pgnInput').value.trim()) {
