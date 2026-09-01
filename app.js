@@ -492,47 +492,82 @@ var REVIEW_COMMENTARY = {
 // ═══════════════════════════════════════════════════════
 var typeTimer = null, talkTimer = null, typewriteEndTime = 0, _ttsCallback = null;
 
+function updateBoardSquareBadge(san, cls) {
+  var overlay = document.getElementById('boardBadgeOverlay');
+  if (!overlay) return;
+  if (!san || !cls) {
+    overlay.style.display = 'none';
+    return;
+  }
+  var dest = null;
+  if (san === 'O-O') dest = game.turn() === 'w' ? 'g8' : 'g1';
+  else if (san === 'O-O-O') dest = game.turn() === 'w' ? 'c8' : 'c1';
+  else {
+    var match = san.match(/([a-h][1-8])/);
+    if (match) dest = match[1];
+  }
+  if (!dest) {
+    overlay.style.display = 'none';
+    return;
+  }
+  var file = dest.charCodeAt(0) - 97;
+  var rank = parseInt(dest[1], 10) - 1;
+  var isFlipped = cg && cg.state && cg.state.orientation === 'black';
+  var col = isFlipped ? 7 - file : file;
+  var row = isFlipped ? rank : 7 - rank;
+
+  overlay.className = 'board-badge-overlay ' + cls;
+  overlay.textContent = CLASS_META[cls] ? CLASS_META[cls].icon : '';
+  overlay.style.display = 'flex';
+  overlay.style.left = (col * 12.5 + 8.2) + '%';
+  overlay.style.top = (row * 12.5 + 1.2) + '%';
+}
+
 function updateCoach(data) {
   var cls = (data.classification || 'good').toLowerCase().replace(/\s+/g, '');
   var meta = CLASS_META[cls] || CLASS_META.good;
   var color = MOOD_COLORS[cls] || '#c9a24b';
   var bot = document.getElementById('coachBot');
   var box = document.getElementById('dialogueBox');
-  bot.style.setProperty('--mood', color);
-  box.style.setProperty('--mood', color);
-  document.getElementById('botMouth').setAttribute('d', MOUTH[cls] || MOUTH.good);
-  document.getElementById('botBrowL').setAttribute('d', BROW_L[cls] || BROW_L.good);
-  document.getElementById('botBrowR').setAttribute('d', BROW_R[cls] || BROW_R.good);
-  document.getElementById('badgeIcon').textContent = meta.icon;
-  var lbl = document.getElementById('dialogueLabel');
-  var ico = document.getElementById('dialogueIconEl');
-  lbl.textContent = meta.label;
-  lbl.style.color = color;
-  ico.textContent = meta.icon;
-  ico.style.color = color;
-  bot.setAttribute('data-mood', cls);
-  bot.classList.remove('pulse-in');
-  void bot.offsetWidth;
-  bot.classList.add('pulse-in');
-  box.classList.remove('setting-mood');
-  void box.offsetWidth;
-  box.classList.add('setting-mood');
+  if (bot) {
+    bot.style.setProperty('--mood', color);
+    bot.setAttribute('data-mood', cls);
+    bot.classList.remove('pulse-in');
+    void bot.offsetWidth;
+    bot.classList.add('pulse-in');
+  }
+  if (box) {
+    box.style.setProperty('--mood', color);
+    box.classList.remove('setting-mood');
+    void box.offsetWidth;
+    box.classList.add('setting-mood');
+  }
+  var badgeIco = document.getElementById('dialogueBadgeIcon');
+  if (badgeIco) {
+    badgeIco.textContent = meta.icon || '✓';
+    badgeIco.style.background = color;
+  }
+  var evalPill = document.getElementById('dialogueEvalPill');
+  if (evalPill) {
+    var cur = (data.currentEval !== undefined && data.currentEval !== null) ? Number(data.currentEval) : 0;
+    evalPill.textContent = (cur >= 0 ? '+' : '') + cur.toFixed(2);
+  }
+  updateBoardSquareBadge(data.moveSan, cls);
   triggerFx(cls);
   window._lastPv = data.pvAfter || null;
   window._lastFen = data.fenAfter || null;
   var isBad = ['blunder','mistake','inaccuracy'].indexOf(cls) !== -1;
   var whyBtn = document.getElementById('whyMistakeBtn');
   if (whyBtn) {
-    whyBtn.style.display = isBad && data.pvAfter ? 'inline-block' : 'none';
-    document.getElementById('refutationDisplay').innerHTML = '';
+    var refDisplay = document.getElementById('refutationDisplay');
+    if (refDisplay) refDisplay.innerHTML = '';
   }
   var html;
-  // Only roast the player for their own moves in Maia mode (not Maia's moves, not review mode)
   if (maiaMode && data.isUserMove && currentMode !== 'review') {
     var pool = ROAST_MSGS[cls] || ROAST_MSGS.good;
     html = pool[Math.floor(Math.random() * pool.length)];
     if (data.moveSan) {
-      var label = '<span class="accent">' + data.moveSan.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;') + '</span>';
+      var label = '<strong class="accent">' + data.moveSan.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;') + '</strong>';
       html = label + ' — ' + html;
     }
   } else {
@@ -540,6 +575,7 @@ function updateCoach(data) {
   }
   typewrite(html);
 }
+
 
 // ── Refutation Replay State ──
 var _refReplayTimer = null;
@@ -1058,82 +1094,80 @@ function updateMoveHighlight() {
 }
 function renderHistory() {
   var list = document.getElementById('moveList');
+  if (!list) return;
   list.innerHTML = '';
-  moveHistory.forEach(function(m, i) {
-    var chip = document.createElement('span');
-    chip.className = 'move-chip' + (i === navIdx && branchState.mode === 'mainline' ? ' active' : '');
-    var color = MOOD_COLORS[m.classification] || '#6b7280';
-    var mn = Math.floor(i / 2) + 1, isW = i % 2 === 0;
-    chip.innerHTML = '<span class="move-num">' + (isW ? mn + '.' : '') + '</span><span class="cls-dot" style="background:' + color + '"></span>' + m.san;
-    chip.addEventListener('click', function() {
-      if (!isAnalysing) goToMove(i);
-    });
-    list.appendChild(chip);
-
-    // Render branch buttons below the divergence point
-    var brsAt = branches.filter(function(b) { return b.parentMoveIndex === i; });
-    if (brsAt.length > 0) {
-      var brWrap = document.createElement('div');
-      brWrap.className = 'branch-wrap';
-      brsAt.forEach(function(b) {
-        var brChip = document.createElement('span');
-        var isActive = (branchState.mode === 'branch' && branchState.activeBranchId === b.id);
-        brChip.className = 'branch-chip' + (isActive ? ' active' : '');
-        brChip.innerHTML = '&#9492; Var ' + b.label + ': <strong>' + b.moves[0] + '</strong>' + (b.moves.length > 1 ? '...' : '');
-        brChip.title = 'Branch ' + b.label + ': ' + b.moves.join(' ');
-        brChip.addEventListener('click', function(ev) {
-          if (!isAnalysing) { ev.stopPropagation(); goToBranch(b.id); }
-        });
-        // Promote button
-        var promBtn = document.createElement('span');
-        promBtn.className = 'branch-prom';
-        promBtn.textContent = '\u2B06';
-        promBtn.title = 'Promote to main line';
-        promBtn.addEventListener('click', function(ev) {
-          ev.stopPropagation();
-          if (!isAnalysing) promoteBranch(b.id);
-        });
-        brChip.appendChild(promBtn);
-        // X delete button on hover
-        var delBtn = document.createElement('span');
-        delBtn.className = 'branch-del';
-        delBtn.textContent = '\u2716';
-        delBtn.addEventListener('click', function(ev) {
-          ev.stopPropagation();
-          if (!isAnalysing) deleteBranch(b.id);
-        });
-        brChip.appendChild(delBtn);
-        brWrap.appendChild(brChip);
-      });
-
-      // Popover for "Delete branches here" on the main line chip
-      var popBtn = document.createElement('span');
-      popBtn.className = 'branch-pop-btn';
-      popBtn.textContent = '\u25BE';
-      popBtn.addEventListener('click', function(ev) {
-        ev.stopPropagation();
-        showBranchPopover(popBtn, i);
-      });
-      chip.appendChild(popBtn);
-
-      list.appendChild(brWrap);
+  var totalPairs = Math.ceil(moveHistory.length / 2);
+  for (var row = 0; row < totalPairs; row++) {
+    var rowEl = document.createElement('div');
+    rowEl.className = 'move-row';
+    
+    var numEl = document.createElement('div');
+    numEl.className = 'move-num-col';
+    numEl.textContent = (row + 1) + '.';
+    rowEl.appendChild(numEl);
+    
+    // White Move (row * 2)
+    var wIdx = row * 2;
+    var wMove = moveHistory[wIdx];
+    if (wMove) {
+      var wCell = document.createElement('div');
+      wCell.className = 'move-cell' + (wIdx === navIdx ? ' active' : '');
+      var wCls = wMove.classification || 'good';
+      var wMeta = CLASS_META[wCls] || { icon: '✓' };
+      var wBadge = '<span class="move-badge-mini ' + wCls + '">' + (wMeta.icon || '✓') + '</span>';
+      wCell.innerHTML = wBadge + '<span>' + wMove.san + '</span>';
+      (function(idx) {
+        wCell.addEventListener('click', function() { if (!isAnalysing) goToMove(idx); });
+      })(wIdx);
+      rowEl.appendChild(wCell);
+    } else {
+      var wEmpty = document.createElement('div');
+      wEmpty.className = 'move-cell';
+      rowEl.appendChild(wEmpty);
     }
-  });
-  list.scrollTop = list.scrollHeight;
+    
+    // Black Move (row * 2 + 1)
+    var bIdx = row * 2 + 1;
+    var bMove = moveHistory[bIdx];
+    if (bMove) {
+      var bCell = document.createElement('div');
+      bCell.className = 'move-cell' + (bIdx === navIdx ? ' active' : '');
+      var bCls = bMove.classification || 'good';
+      var bMeta = CLASS_META[bCls] || { icon: '✓' };
+      var bBadge = '<span class="move-badge-mini ' + bCls + '">' + (bMeta.icon || '✓') + '</span>';
+      bCell.innerHTML = bBadge + '<span>' + bMove.san + '</span>';
+      (function(idx) {
+        bCell.addEventListener('click', function() { if (!isAnalysing) goToMove(idx); });
+      })(bIdx);
+      rowEl.appendChild(bCell);
+    } else {
+      var bEmpty = document.createElement('div');
+      bEmpty.className = 'move-cell';
+      rowEl.appendChild(bEmpty);
+    }
+    
+    list.appendChild(rowEl);
+  }
+  
+  var activeCell = list.querySelector('.move-cell.active');
+  if (activeCell) activeCell.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+
   var vals = { blunder: 0, mistake: .2, inaccuracy: .4, good: .65, excellent: .9, best: 1, great: 1, brilliant: 1, forced: 1, book: 1 };
   var wS = 0, wT = 0, bS = 0, bT = 0;
   moveHistory.forEach(function(m, i) {
     var v = vals[m.classification] || .65;
-    // Best moves only score as best when eval is decisively in one side's favour (±3+)
     if ((m.classification === 'best' || m.classification === 'excellent') && Math.abs(m.evalAfter) < 3.0) {
-      v = .65; // treat as good in balanced positions
+      v = .65;
     }
     if (i % 2 === 0) { wS += v; wT++; } else { bS += v; bT++; }
   });
   var acc = document.getElementById('accuracyDisplay');
-  if (wT > 0) acc.textContent = 'W: ' + Math.round(wS / wT * 100) + '% \u00B7 B: ' + (bT > 0 ? Math.round(bS / bT * 100) + '%' : '--');
-  else acc.textContent = '';
+  if (acc) {
+    if (wT > 0) acc.textContent = 'Acc: ' + Math.round(wS / wT * 100) + '% / ' + (bT > 0 ? Math.round(bS / bT * 100) + '%' : '--');
+    else acc.textContent = '';
+  }
 }
+
 
 function showBranchPopover(anchorEl, parentIdx) {
   var existing = document.querySelector('.branch-popover');
@@ -3741,19 +3775,105 @@ document.getElementById('chessUserInput').addEventListener('keydown', function(e
 
 
 // ═══════════════════════════════════════════════════════
+// CHESS.COM REVIEW MEDIA & MODAL CONTROLS
+// ═══════════════════════════════════════════════════════
+var isAutoPlaying = false;
+var autoPlayTimer = null;
+
+function toggleAutoPlay() {
+  var btn = document.getElementById('autoPlayBtn');
+  if (isAutoPlaying) {
+    isAutoPlaying = false;
+    if (autoPlayTimer) clearInterval(autoPlayTimer);
+    autoPlayTimer = null;
+    if (btn) btn.textContent = '▶';
+  } else {
+    isAutoPlaying = true;
+    if (btn) btn.textContent = '⏸';
+    autoPlayTimer = setInterval(function() {
+      if (navIdx < moveHistory.length - 1) {
+        goToMove(navIdx + 1);
+      } else {
+        toggleAutoPlay();
+      }
+    }, 1600);
+  }
+}
+
+// Media Navigation
+var firstBtn = document.getElementById('firstMoveBtn');
+if (firstBtn) firstBtn.addEventListener('click', function() {
+  if (isAutoPlaying) toggleAutoPlay();
+  if (moveHistory.length > 0) goToMove(0);
+});
+
+var lastBtn = document.getElementById('lastMoveBtn');
+if (lastBtn) lastBtn.addEventListener('click', function() {
+  if (isAutoPlaying) toggleAutoPlay();
+  if (moveHistory.length > 0) goToMove(moveHistory.length - 1);
+});
+
+var autoBtn = document.getElementById('autoPlayBtn');
+if (autoBtn) autoBtn.addEventListener('click', toggleAutoPlay);
+
+// Modal Show/Hide
+function showSetupModal() {
+  var m = document.getElementById('setupModal');
+  if (m) m.style.display = 'flex';
+}
+function hideSetupModal() {
+  var m = document.getElementById('setupModal');
+  if (m) m.style.display = 'none';
+}
+
+var openModalBtn = document.getElementById('openSetupModalBtn');
+if (openModalBtn) openModalBtn.addEventListener('click', showSetupModal);
+var quickBtn = document.getElementById('quickSetupBtn');
+if (quickBtn) quickBtn.addEventListener('click', showSetupModal);
+var backBtn = document.getElementById('backToSetupBtn');
+if (backBtn) backBtn.addEventListener('click', showSetupModal);
+var closeModalBtn = document.getElementById('closeSetupModalBtn');
+if (closeModalBtn) closeModalBtn.addEventListener('click', hideSetupModal);
+
+// Modal Tab Navigation
+function selectModalTab(tabId) {
+  var tabs = ['tabPgn', 'tabFen', 'tabSync', 'tabSettings'];
+  tabs.forEach(function(t) {
+    var btn = document.getElementById(t + 'Btn');
+    var content = document.getElementById(t + 'Content');
+    if (btn) btn.classList.toggle('active', t === tabId);
+    if (content) content.style.display = (t === tabId) ? 'block' : 'none';
+  });
+}
+
+['tabPgn', 'tabFen', 'tabSync', 'tabSettings'].forEach(function(tab) {
+  var btn = document.getElementById(tab + 'Btn');
+  if (btn) btn.addEventListener('click', function() { selectModalTab(tab); });
+});
+
+// Explain button
+var whyBtn = document.getElementById('whyMistakeBtn');
+if (whyBtn) {
+  whyBtn.addEventListener('click', function() {
+    if (typeof showRefutation === 'function') showRefutation();
+  });
+}
+
+// ═══════════════════════════════════════════════════════
 // INIT
 // ═══════════════════════════════════════════════════════
 // Restore rating pref
 var savedRating = loadRatingPref();
-document.getElementById('ratingSelect').value = savedRating;
+if (document.getElementById('ratingSelect')) {
+  document.getElementById('ratingSelect').value = savedRating;
+}
 
-// Fallback: populate input from localStorage (if .env fetch already set it, this is a no-op)
-if (!document.getElementById('apiToken').value) {
+// Fallback: populate input from localStorage
+if (document.getElementById('apiToken') && !document.getElementById('apiToken').value) {
   document.getElementById('apiToken').value = loadApiToken();
 }
 
 initEngine();
 initBoard();
-coachReset('Welcome! Options: (1) Paste a PGN and click "Review Game", (2) Click "Play vs Coach" to play Maia AI, then click "Review Game" to analyze your game, or (3) Load a FEN position and analyze it.');
+coachReset('e4 is a book move');
 
-// Maia AI loads on-demand when user clicks "Play vs Coach" (see coachPlayBtn handler)
