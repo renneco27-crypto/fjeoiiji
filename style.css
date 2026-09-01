@@ -151,31 +151,52 @@
   --color-text-default: rgba(255, 255, 255, 0.72);
   --color-text-subtle: rgba(255, 255, 255, 0.50);
 
-  --font-family-system: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, Helvetica, Arial, sans-serif;
+  /* ── Typography & Webfonts ── */
+  --font-family-system: 'ChessSans', -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, Helvetica, Arial, sans-serif;
   --globalSiteBackground: #302E2B;
 
-  /* ── Board & Piece Assets ── */
-  --fallback-theme-board-style-image: url('https://images.chesscomfiles.com/chess-themes/boards/green/150.png');
+  /* ── Board & Piece Assets (Local & CDN Fallback) ── */
+  --fallback-theme-board-style-image: url('images/150.6d781.png'), url('https://images.chesscomfiles.com/chess-themes/boards/green/150.png');
   --fallback-theme-board-style-coordinate-color-light: #EBECD0;
   --fallback-theme-board-style-coordinate-color-dark: #739552;
 
-  --fallback-theme-piece-set-wp: url('https://images.chesscomfiles.com/chess-themes/pieces/neo/150/wp.png');
-  --fallback-theme-piece-set-wn: url('https://images.chesscomfiles.com/chess-themes/pieces/neo/150/wn.png');
-  --fallback-theme-piece-set-wr: url('https://images.chesscomfiles.com/chess-themes/pieces/neo/150/wr.png');
-  --fallback-theme-piece-set-wb: url('https://images.chesscomfiles.com/chess-themes/pieces/neo/150/wb.png');
-  --fallback-theme-piece-set-wq: url('https://images.chesscomfiles.com/chess-themes/pieces/neo/150/wq.png');
-  --fallback-theme-piece-set-wk: url('https://images.chesscomfiles.com/chess-themes/pieces/neo/150/wk.png');
+  --fallback-theme-piece-set-wp: url('images/wp.38891.png'), url('https://images.chesscomfiles.com/chess-themes/pieces/neo/150/wp.png');
+  --fallback-theme-piece-set-wn: url('images/wn.38891.png'), url('https://images.chesscomfiles.com/chess-themes/pieces/neo/150/wn.png');
+  --fallback-theme-piece-set-wr: url('images/wr.38891.png'), url('https://images.chesscomfiles.com/chess-themes/pieces/neo/150/wr.png');
+  --fallback-theme-piece-set-wb: url('images/wb.38891.png'), url('https://images.chesscomfiles.com/chess-themes/pieces/neo/150/wb.png');
+  --fallback-theme-piece-set-wq: url('images/wq.38891.png'), url('https://images.chesscomfiles.com/chess-themes/pieces/neo/150/wq.png');
+  --fallback-theme-piece-set-wk: url('images/wk.38891.png'), url('https://images.chesscomfiles.com/chess-themes/pieces/neo/150/wk.png');
 
-  --fallback-theme-piece-set-bp: url('https://images.chesscomfiles.com/chess-themes/pieces/neo/150/bp.png');
-  --fallback-theme-piece-set-bn: url('https://images.chesscomfiles.com/chess-themes/pieces/neo/150/bn.png');
-  --fallback-theme-piece-set-bb: url('https://images.chesscomfiles.com/chess-themes/pieces/neo/150/bb.png');
-  --fallback-theme-piece-set-br: url('https://images.chesscomfiles.com/chess-themes/pieces/neo/150/br.png');
-  --fallback-theme-piece-set-bq: url('https://images.chesscomfiles.com/chess-themes/pieces/neo/150/bq.png');
-  --fallback-theme-piece-set-bk: url('https://images.chesscomfiles.com/chess-themes/pieces/neo/150/bk.png');
+  --fallback-theme-piece-set-bp: url('images/bp.38891.png'), url('https://images.chesscomfiles.com/chess-themes/pieces/neo/150/bp.png');
+  --fallback-theme-piece-set-bn: url('images/bn.38891.png'), url('https://images.chesscomfiles.com/chess-themes/pieces/neo/150/bn.png');
+  --fallback-theme-piece-set-bb: url('images/bb.38891.png'), url('https://images.chesscomfiles.com/chess-themes/pieces/neo/150/bb.png');
+  --fallback-theme-piece-set-br: url('images/br.38891.png'), url('https://images.chesscomfiles.com/chess-themes/pieces/neo/150/br.png');
+  --fallback-theme-piece-set-bq: url('images/bq.38891.png'), url('https://images.chesscomfiles.com/chess-themes/pieces/neo/150/bq.png');
+  --fallback-theme-piece-set-bk: url('images/bk.38891.png'), url('https://images.chesscomfiles.com/chess-themes/pieces/neo/150/bk.png');
 
   --mood: var(--color-skin-300);
   color-scheme: dark;
 }
+
+@font-face {
+  font-family: 'ChessSans';
+  src: url('fonts/ChessSans-Bold.19a3983f.0d5de.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'ChessSans';
+  src: url('fonts/ChessSans-ExtraBold.3b60f736.0d5de.woff2') format('woff2');
+  font-weight: 800;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'ChessGlyph';
+  src: url('fonts/chessglyph-v3.3e78f81f.783dd.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+}
+
 
 /* ── Reset ── */
 *, *::before, *::after {
@@ -266,9 +287,26 @@ html, body {
   color: #ffffff;
 }
 
+.nav-icon-img {
+  display: inline-block;
+  opacity: 0.85;
+  filter: brightness(0.95);
+}
+
+.nav-item:hover .nav-icon-img, .nav-item.active .nav-icon-img {
+  opacity: 1;
+  filter: brightness(1.2);
+}
+
+.player-avatar-img {
+  display: block;
+  border-radius: 4px;
+}
+
 .nav-icon {
   font-size: 16px;
 }
+
 
 .nav-trial-badge {
   display: flex;
